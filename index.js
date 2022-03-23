@@ -1,14 +1,7 @@
-// const myvar = require('./myvar');  // 내가 만든 경로 안에서 찾기
-// console.log(myvar.a);
+const http = require('http');
 
-// const name = new a();
-// console.log(name.myName);
-
-//const myVar = require('./myvar');
-
-const myVar = require('./myvar');
-console.log(myVar);     // { a: 'hello a' }
-console.log(myVar.a);   // hello a
-
-const setVar = new myVar();
-console.log(setVar.name);   // my instance
+http.createServer( (request, response) => {  
+    response.writeHead(200, {'Content-Type' : 'text/plain'});
+    response.write('Hello Server');
+    response.end();
+}).listen(3000);
