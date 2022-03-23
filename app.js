@@ -1,5 +1,6 @@
 const express = require('express');
 const nunjucks = require('nunjucks');
+const logger = require('morgan');
 
 const admin = require('./routes/admin');
 
@@ -12,12 +13,21 @@ nunjucks.configure('template', {
     express: app
 });
 
+// 미들웨어 셋팅
+app.use( logger('dev') );
+
 app.get('/', (req,res) => {
     res.send('express start');
 });
 
+// admin 전체에 미들웨어 세팅
+function vipMiddleware (req, res, next) {
+    console.log('최우선 미들웨어');
+    next();
+}
+
 // Routing
-app.use('/admin', admin);
+app.use('/admin', vipMiddleware, admin);
  
 app.listen( port, () => {
     console.log('Express listening on port', port);

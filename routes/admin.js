@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req,res) => {
+function testMiddleware( req, res, next ) {
+    console.log('첫번째 미들웨어');
+    next();
+}
+
+router.get('/', testMiddleware, (req,res) => {
     res.send('admin app');
 });
 
