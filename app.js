@@ -1,24 +1,24 @@
 const express = require('express');
+const nunjucks = require('nunjucks');
 
 const admin = require('./routes/admin');
-const contacts = require('./routes/contacts');
 
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-    res.send('hello express yeah');
+// template를 기본 폴더로 하고, 이후에 생성하는 것은 template의 하위 폴더로 생성됨
+nunjucks.configure('template', {
+    autoescape: true,
+    express: app
 });
 
-app.get('/addUrl', (req, res) => {
-    res.send('added URL request');
+app.get('/', (req,res) => {
+    res.send('express start');
 });
 
-// admin까지는 상단의 admin의 url을 따라라
-app.use( '/admin', admin );
-app.use( '/contacts', contacts );
-
-// createServer와 같은 기능
+// Routing
+app.use('/admin', admin);
+ 
 app.listen( port, () => {
     console.log('Express listening on port', port);
 });
