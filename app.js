@@ -30,14 +30,16 @@ app.get('/', (req,res) => {
     res.send('express start');
 });
 
-// admin 전체에 미들웨어 세팅
-function vipMiddleware (req, res, next) {
-    console.log('최우선 미들웨어');
-    next();
-}
-
 // Routing
-app.use('/admin', vipMiddleware, admin);
+app.use('/admin', admin);
+
+// 모든 라우팅 이후에 에러 잡음
+app.use((req, res, _) => {
+    res.status(400).render('common/404.html');
+});
+app.use((req, res, _) => {
+    res.status(500).render('common/500.html');
+});
  
 app.listen( port, () => {
     console.log('Express listening on port', port);
