@@ -17,5 +17,14 @@ router.get('/products', function(req, res) {
     } // message 란 변수를 템플릿으로 내보낸다.
     );
 });
+    
+router.get('/products/write', function(req, res) {
+    res.render('admin/write.html');
+});
+
+router.post('/products/write', function(req, res) {
+    res.send(req.body);
+});
+
 
 module.exports = router;
